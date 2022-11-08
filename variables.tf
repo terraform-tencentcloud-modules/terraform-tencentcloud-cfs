@@ -39,21 +39,21 @@ variable "cfs_access_group_description" {
 
 #Access Rule
 variable "auth_client_ip" {
-  type = list(string)
+  type    = list(string)
   default = [""]
 }
 
 variable "priority" {
-  type = list(number)
+  type    = list(number)
   default = []
 }
 
 variable "rw_permission" {
-  type = list(string)
+  type    = list(string)
   default = [""]
 }
 
 variable "user_permission" {
-  type = list(string)
+  type    = list(string)
   default = [""]
 }

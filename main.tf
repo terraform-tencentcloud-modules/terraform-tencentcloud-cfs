@@ -1,5 +1,5 @@
 provider "tencentcloud" {
-  region     = var.region
+  region = var.region
 }
 
 resource "tencentcloud_cfs_file_system" "cfs" {
@@ -7,10 +7,10 @@ resource "tencentcloud_cfs_file_system" "cfs" {
   subnet_id         = var.cfs_subnet_id
   availability_zone = var.cfs_availability_zone
 
-  name              = var.cfs_name
-  storage_type      = "SD"
-  access_group_id   = tencentcloud_cfs_access_group.cfs-access-group.id
-  protocol          = var.cfs_protocol
+  name            = var.cfs_name
+  storage_type    = "SD"
+  access_group_id = tencentcloud_cfs_access_group.cfs-access-group.id
+  protocol        = var.cfs_protocol
 
   tags = var.cfs_tags
 }
