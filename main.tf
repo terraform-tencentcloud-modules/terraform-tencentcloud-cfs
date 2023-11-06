@@ -1,18 +1,21 @@
-provider "tencentcloud" {
-  region = var.region
-}
-
 resource "tencentcloud_cfs_file_system" "cfs" {
-  vpc_id            = var.vpc_id
-  subnet_id         = var.cfs_subnet_id
-  availability_zone = var.cfs_availability_zone
+  for_each = var.cfs_map
 
-  name            = var.cfs_name
-  storage_type    = "SD"
+  net_interface = try(each.value.net_interface, "VPC")
+  vpc_id            = try(each.value.vpc_id, null)
+  subnet_id         = try(each.value.subnet_id, null)
+  availability_zone = each.value.availability_zone
+
+  ccn_id = try(each.value.ccn_id, null)
+  cidr_block = try(each.value.cidr_block, null)
+
+  capacity = try(each.value.capacity, null)
+  name            = try(each.value.cfs_name, each.key)
+  storage_type    = try(each.value.storage_type, "SD")
   access_group_id = tencentcloud_cfs_access_group.cfs-access-group.id
-  protocol        = var.cfs_protocol
-
-  tags = var.cfs_tags
+  protocol        = try(each.value.protocol, "NFS")
+  tags = try(each.value.tags, {})
+  mount_ip = try(each.value.mount_ip, null)
 }
 
 resource "tencentcloud_cfs_access_group" "cfs-access-group" {
