@@ -1,21 +1,21 @@
 resource "tencentcloud_cfs_file_system" "cfs" {
   for_each = var.cfs_map
 
-  net_interface = try(each.value.net_interface, "VPC")
+  net_interface     = try(each.value.net_interface, "VPC")
   vpc_id            = try(each.value.vpc_id, null)
   subnet_id         = try(each.value.subnet_id, null)
   availability_zone = each.value.availability_zone
 
-  ccn_id = try(each.value.ccn_id, null)
+  ccn_id     = try(each.value.ccn_id, null)
   cidr_block = try(each.value.cidr_block, null)
 
-  capacity = try(each.value.capacity, null)
+  capacity        = try(each.value.capacity, null)
   name            = try(each.value.cfs_name, each.key)
   storage_type    = try(each.value.storage_type, "SD")
   access_group_id = tencentcloud_cfs_access_group.cfs-access-group.id
   protocol        = try(each.value.protocol, "NFS")
-  tags = try(each.value.tags, {})
-  mount_ip = try(each.value.mount_ip, null)
+  tags            = try(each.value.tags, {})
+  mount_ip        = try(each.value.mount_ip, null)
 }
 
 resource "tencentcloud_cfs_access_group" "cfs-access-group" {
